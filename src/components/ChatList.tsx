@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
+import '../styles/ChatList.css';
 
 const ChatList: React.FC = () => {
     const [chatRooms, setChatRooms] = useState<any[]>([]);
@@ -27,9 +28,9 @@ const ChatList: React.FC = () => {
     }, []);
 
     return (
-        <div>
-            <h1>Wybierz czat:</h1>
-            <ul>
+        <div className='ChatListContainer'>
+            <h1>Wybierz czat z lekarzem:</h1>
+            <ul className='ChatList'>
                 {chatRooms.map(chat => (
                     <li key={chat.id}>
                         <Link to={`/ChatRoom/${chat.id}`}>{chat.id}</Link>

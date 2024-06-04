@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import { db, auth } from '../firebaseConfig';
+import '../styles/ChatRoom.css';
 
 const ChatRoom: React.FC = () => {
-    const { roomId } = useParams<{ roomId: string }>(); 
+    const { roomId } = useParams<{ roomId: string }>();
     const [messages, setMessages] = useState<any[]>([]);
     const [newMessage, setNewMessage] = useState('');
 
@@ -25,9 +26,12 @@ const ChatRoom: React.FC = () => {
         e.preventDefault();
         if (newMessage.trim() === '') return;
 
+        const user = auth.currentUser;
+        if (!user) return;
+
         await addDoc(collection(db, `chatRooms/${roomId}/messages`), {
             text: newMessage,
-            user: "anonymous", // Replace with actual user information
+            user: user.email, // Używamy e-maila użytkownika
             timestamp: serverTimestamp()
         });
 
@@ -35,12 +39,13 @@ const ChatRoom: React.FC = () => {
     };
 
     return (
-        <div>
-            <h1>Wiadomości z pokoju {roomId}</h1>
+        <div className='ChatRoomContainer'>
+            <h1>Konwersacja z {roomId}</h1>
             <div>
                 {messages.map((message: any, index: number) => (
                     <div key={index}>
-                        <strong>{message.user}:</strong> {message.text}
+                        <small>{message.timestamp?.toDate().toLocaleString()}</small> <br />
+                        <strong>{message.user}:</strong> {message.text} <br />
                     </div>
                 ))}
             </div>
@@ -51,7 +56,7 @@ const ChatRoom: React.FC = () => {
                     onChange={(e) => setNewMessage(e.target.value)}
                     placeholder="Type a message"
                 />
-                <button type="submit">Send</button>
+                <button type="submit">Wyślij</button>
             </form>
         </div>
     );

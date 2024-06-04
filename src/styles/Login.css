@@ -1,0 +1,31 @@
+.LoginContainer {
+    width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.inputContainer {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+
+    .inputs, .buttons {
+        width: 100%;
+        display: flex;
+        gap: 0.25rem;
+    }
+
+    .buttons {
+        justify-content: right;
+        button {
+            width: 5rem;
+            height: 1.5rem;
+        }
+    }
+}

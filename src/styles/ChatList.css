@@ -1,0 +1,19 @@
+.ChatListContainer {
+    border: 1px solid white;
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+
+    .ChatList {
+        font-size: 1.25rem;
+        list-style:decimal;
+        li {
+            margin-bottom: 0.25rem;
+            a {
+                color: white;
+                text-decoration: none;
+            }
+        }
+    }
+}
