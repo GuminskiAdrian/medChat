@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { collection, addDoc, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { collection, getDocs, addDoc, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 
 const ChatRoom: React.FC = () => {
+    console.log(useParams());
     const { roomId } = useParams<{ roomId: string }>(); // Zakładam, że parametr z URL nazywa się roomId
     const [messages, setMessages] = useState<any[]>([]);
-
     useEffect(() => {
         const fetchMessages = async () => {
             try {
-                const q = query(collection(db, `chatRooms/${roomId}`), orderBy('timestamp'));
+                const q = query(collection(db, `chatRooms`), orderBy('timestamp'));
                 const unsubscribe = onSnapshot(q, (snapshot) => {
                     const messagesData = snapshot.docs.map(doc => doc.data());
                     setMessages(messagesData);
@@ -20,9 +20,9 @@ const ChatRoom: React.FC = () => {
                 console.error('Error fetching messages:', error);
             }
         };
-
         fetchMessages();
     }, [roomId]); // Zależność useEffect zmieniona na roomId
+
 
     return (
         <div>

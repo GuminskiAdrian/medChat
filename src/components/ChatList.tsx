@@ -32,7 +32,7 @@ const ChatList: React.FC = () => {
             <ul>
                 {chatRooms.map(chat => (
                     <li key={chat.id}>
-                        <Link to={`/chat/${chat.id}`}>{chat.id}</Link>
+                        <Link to={`/ChatRoom/${chat.id}`}>{chat.id}</Link>
                     </li>
                 ))}
             </ul>
