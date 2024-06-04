@@ -17,7 +17,6 @@ const ChatList: React.FC = () => {
                     id: doc.id,
                     name: doc.data().name
                 }));
-                console.log('Rooms data:', roomsData); 
                 setChatRooms(roomsData);
             } catch (error) {
                 console.error('Error fetching chat rooms:', error);

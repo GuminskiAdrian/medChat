@@ -34,6 +34,7 @@ const ChatRoom: React.FC = () => {
             user: user.email, // Używamy e-maila użytkownika
             timestamp: serverTimestamp()
         });
+        
 
         setNewMessage('');
     };

@@ -1,5 +1,4 @@
 .ChatRoomContainer {
-    border: 1px solid white;
     display: grid;
     justify-content: center;
     gap: 0.5rem;

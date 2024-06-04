@@ -15,7 +15,8 @@
     grid-template-columns: 1fr;
     gap: 0.5rem;
 
-    .inputs, .buttons {
+    .inputs,
+    .buttons {
         width: 100%;
         display: flex;
         gap: 0.25rem;
