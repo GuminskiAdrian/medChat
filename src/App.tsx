@@ -19,7 +19,7 @@ const App: React.FC = () => {
                 <Route path="/ChatList">
                     <ChatList />
                 </Route>
-                <Route path="/ChatRoom">
+                <Route path="/ChatRoom/:roomId">
                     <ChatRoom />
                 </Route>
                 <Route path="/register">

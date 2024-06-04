@@ -1,28 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { collection, getDocs, addDoc, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 
 const ChatRoom: React.FC = () => {
-    console.log(useParams());
-    const { roomId } = useParams<{ roomId: string }>(); // Zakładam, że parametr z URL nazywa się roomId
+    const { roomId } = useParams<{ roomId: string }>(); 
     const [messages, setMessages] = useState<any[]>([]);
-    useEffect(() => {
-        const fetchMessages = async () => {
-            try {
-                const q = query(collection(db, `chatRooms`), orderBy('timestamp'));
-                const unsubscribe = onSnapshot(q, (snapshot) => {
-                    const messagesData = snapshot.docs.map(doc => doc.data());
-                    setMessages(messagesData);
-                });
-                return unsubscribe;
-            } catch (error) {
-                console.error('Error fetching messages:', error);
-            }
-        };
-        fetchMessages();
-    }, [roomId]); // Zależność useEffect zmieniona na roomId
+    const [newMessage, setNewMessage] = useState('');
 
+    useEffect(() => {
+        const q = query(collection(db, `chatRooms/${roomId}/messages`), orderBy('timestamp'));
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const messagesData = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            setMessages(messagesData);
+        });
+
+        return () => unsubscribe();
+    }, [roomId]);
+
+    const handleSendMessage = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (newMessage.trim() === '') return;
+
+        await addDoc(collection(db, `chatRooms/${roomId}/messages`), {
+            text: newMessage,
+            user: "anonymous", // Replace with actual user information
+            timestamp: serverTimestamp()
+        });
+
+        setNewMessage('');
+    };
 
     return (
         <div>
@@ -34,6 +44,15 @@ const ChatRoom: React.FC = () => {
                     </div>
                 ))}
             </div>
+            <form onSubmit={handleSendMessage}>
+                <input
+                    type="text"
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    placeholder="Type a message"
+                />
+                <button type="submit">Send</button>
+            </form>
         </div>
     );
 };
