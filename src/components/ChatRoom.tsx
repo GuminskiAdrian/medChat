@@ -31,7 +31,8 @@ const ChatRoom: React.FC = () => {
 
         await addDoc(collection(db, `chatRooms/${roomId}/messages`), {
             text: newMessage,
-            user: user.email, // Używamy e-maila użytkownika
+            user: user.email,
+            userId: user.uid,
             timestamp: serverTimestamp()
         });
         
@@ -42,13 +43,16 @@ const ChatRoom: React.FC = () => {
     return (
         <div className='ChatRoomContainer'>
             <h1>Konwersacja z {roomId}</h1>
-            <div>
-                {messages.map((message: any, index: number) => (
-                    <div key={index}>
-                        <small>{message.timestamp?.toDate().toLocaleString()}</small> <br />
-                        <strong>{message.user}:</strong> {message.text} <br />
-                    </div>
-                ))}
+            <div className='messagesContainer'>
+                {messages.map((message: any, index: number) => {
+                    const isCurrentUser = message.userId === auth.currentUser?.uid;
+                    return (
+                        <div key={index} className={`message ${isCurrentUser ? 'currentUser' : 'otherUser'}`}>
+                            <small>{message.timestamp?.toDate().toLocaleString()}</small> <br />
+                            {message.text} <br />
+                        </div>
+                    );
+                })}
             </div>
             <form onSubmit={handleSendMessage}>
                 <input
