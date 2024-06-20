@@ -1,32 +1,60 @@
+@import url(./colors.css);
+
 .LoginContainer {
     width: 100%;
+    height: 100vh;
+    background-color: var(--accent);
+
     margin: 0 auto;
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
-    gap: 0.5rem;
+    grid-template-rows: 1fr 1fr 3fr;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     text-align: center;
-}
 
-.inputContainer {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-
-    .inputs,
-    .buttons {
-        width: 100%;
-        display: flex;
-        gap: 0.25rem;
+    .info {
+        h1 {
+            font-size: 3rem;
+        }
+        p {
+            font-size: 2rem;
+        }
     }
 
-    .buttons {
-        justify-content: right;
-        button {
-            width: 5rem;
-            height: 1.5rem;
+    .inputContainer {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+
+        .inputs,
+        .buttons {
+            width: 100%;
+            display: flex;
+            gap: 0.25rem;
+
+            input {
+                background-color: var(--background);
+                border-color: var(--accent);
+                border-radius: 0.2rem;
+                color: var(--text);
+            }
+        }
+
+        .buttons {
+            justify-content: right;
+            button {
+                border-radius: 0.2rem;
+                border: 0px;
+            }
+            :nth-child(1) {
+                border-color: var(--secondary);
+                background-color: #009094;
+            }
+            :nth-child(2) {
+                border-color: var(--primary);
+                background-color: #F0B196;
+            }
         }
     }
 }

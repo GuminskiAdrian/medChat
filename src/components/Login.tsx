@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom"; // Import useHistory
 import { auth } from "../firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import '../styles/Login.css';
+import "../styles/Login.css";
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState("");
@@ -27,8 +27,10 @@ const Login: React.FC = () => {
 
     return (
         <div className="LoginContainer">
-            <h1>MedChat</h1>
-            <p>konsultacja z lekarzem online</p>
+            <div className="info">
+                <h1>MedChat</h1>
+                <p>konsultacja z lekarzem online</p>
+            </div>
             <div className="inputContainer">
                 <div className="inputs">
                     <input
@@ -45,8 +47,8 @@ const Login: React.FC = () => {
                     />
                 </div>
                 <div className="buttons">
-                    <button onClick={handleRegister}>Register</button>
                     <button onClick={handleLogin}>Login</button>
+                    <button onClick={handleRegister}>Register</button>
                 </div>
             </div>
         </div>

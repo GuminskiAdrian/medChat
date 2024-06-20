@@ -1,3 +1,5 @@
+@import url(./colors.css);
+
 .ChatRoomContainer {
     width: 100%;
     max-width: 600px;
@@ -5,31 +7,34 @@
     padding: 10px;
     display: flex;
     flex-direction: column;
+
+    .messagesContainer {
+        flex-grow: 1;
+        overflow-y: auto;
+        margin-bottom: 10px;
+        color: black;
+
+        .message {
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            max-width: 60%;
+            word-wrap: break-word;
+
+        }
+        
+        .currentUser {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+            text-align: right;
+        }
+        
+        .otherUser {
+            background-color: #ffffff;
+            align-self: flex-start;
+            text-align: left;
+        }
+    }
 }
 
-.messagesContainer {
-    flex-grow: 1;
-    overflow-y: auto;
-    margin-bottom: 10px;
-    color: black;
-}
 
-.message {
-    padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    max-width: 60%;
-    word-wrap: break-word;
-}
-
-.currentUser {
-    background-color: #dcf8c6;
-    align-self: flex-end;
-    text-align: right;
-}
-
-.otherUser {
-    background-color: #ffffff;
-    align-self: flex-start;
-    text-align: left;
-}

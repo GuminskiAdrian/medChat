@@ -6,6 +6,7 @@ import Login from './components/Login';
 import ChatList from './components/ChatList';
 import Register from './components/Register';
 import ChatRoom from './components/ChatRoom';
+import './styles/reset.css';
 
 
 
