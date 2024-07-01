@@ -1,28 +1,33 @@
-// Login.tsx
-
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom"; // Import useHistory
+import { useHistory } from "react-router-dom";
 import { auth } from "../firebaseConfig";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import "../styles/Login.css";
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const history = useHistory(); // Inicjalizacja hooka useHistory
+    const history = useHistory();
+    const [message, setMessage] = useState<string | null>(null); // Stan do przechowywania wiadomości
 
     const handleLogin = async () => {
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            // Po udanym zalogowaniu przekieruj do strony czatu
             history.push("/ChatList");
         } catch (error) {
             console.error(error);
+            setMessage("Błąd logowania. Sprawdź swoje dane."); // Ustawianie wiadomości błędu logowania
         }
     };
 
     const handleRegister = async () => {
-        console.log("to bedzie dopiero");
+        try {
+            await createUserWithEmailAndPassword(auth, email, password);
+            setMessage("Rejestracja udana! Teraz możesz się zalogować."); // Ustawianie wiadomości sukcesu rejestracji
+        } catch (error) {
+            console.error(error);
+            setMessage("Błąd rejestracji. Spróbuj ponownie."); // Ustawianie wiadomości błędu rejestracji
+        }
     };
 
     return (
@@ -51,6 +56,7 @@ const Login: React.FC = () => {
                     <button onClick={handleRegister}>Register</button>
                 </div>
             </div>
+            {message && <div className="message">{message}</div>} {/* Wyświetlanie wiadomości */}
         </div>
     );
 };
