@@ -1,14 +1,17 @@
 @import url(./colors.css);
 
 .ChatRoomContainer {
-    width: 100%;
-    max-width: 600px;
+    width: 100vw;
     margin: 0 auto;
     padding: 10px;
-    display: flex;
-    flex-direction: column;
+    h1 {
+        text-align: center;
+    }
 
     .messagesContainer {
+        display: flex;
+        gap: 0.5rem;
+        flex-direction: column;
         flex-grow: 1;
         overflow-y: auto;
         margin-bottom: 10px;
@@ -17,24 +20,25 @@
         .message {
             padding: 10px;
             border-radius: 10px;
-            margin-bottom: 10px;
-            max-width: 60%;
             word-wrap: break-word;
-
         }
-        
+
         .currentUser {
             background-color: #dcf8c6;
             align-self: flex-end;
             text-align: right;
         }
-        
+
         .otherUser {
             background-color: #ffffff;
             align-self: flex-start;
             text-align: left;
         }
     }
+
+    form {
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-template-columns: 10fr 1fr;
+    }
 }
-
-

@@ -1,16 +1,11 @@
 @import url(./colors.css);
 
-body {
-    background-color: var(--background);
-    color: var(--text);
-}
-
 .ChatListContainer {
-    width: 70%;
-    min-height: 30vh;
+    width: 100vw;
+    min-height: 20vh;
     margin: 0 auto;
 
-    background-color: var(--accent);
+    background-color: var(--secondary);
     border-radius: 0.2rem;
 
     display: grid;

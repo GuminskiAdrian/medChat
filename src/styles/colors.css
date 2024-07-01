@@ -2,6 +2,11 @@
     --text: #180C07;
     --background: #FEFAF8;
     --primary: #ED5913;
-    --secondary: #B2F576;
+    --secondary: #dcf8c6;
     --accent: #609fe4;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text);
 }

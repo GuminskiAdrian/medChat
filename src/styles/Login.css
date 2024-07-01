@@ -1,9 +1,9 @@
 @import url(./colors.css);
 
 .LoginContainer {
-    width: 100%;
+    width: 100vw;
     height: 100vh;
-    background-color: var(--accent);
+    background-color: var(--secondary);
 
     margin: 0 auto;
     display: grid;
@@ -17,7 +17,7 @@
             font-size: 3rem;
         }
         p {
-            font-size: 2rem;
+            font-size: 1.5rem;
         }
     }
 
@@ -31,7 +31,7 @@
         .buttons {
             width: 100%;
             display: flex;
-            gap: 0.25rem;
+            gap: 0.3rem;
 
             input {
                 background-color: var(--background);
@@ -41,11 +41,16 @@
             }
         }
 
+        .inputs {
+            flex-direction: column;
+        }
+
         .buttons {
             justify-content: right;
             button {
                 border-radius: 0.2rem;
                 border: 0px;
+                max-height: 2rem;
             }
             :nth-child(1) {
                 border-color: var(--secondary);
