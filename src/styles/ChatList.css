@@ -13,7 +13,25 @@
     justify-content: center;
     align-items: center;
 
+    .container{
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        align-items: center;
+
+        width: 100vw;
+        .LogoutButton {
+            max-height: 2rem;
+            width: 5rem;
+        }
+
+        h1 {
+            justify-self: center;
+        }
+    }
+
     .ChatList {
+        margin: 0 auto;
         font-size: 1.25rem;
         list-style:decimal;
         li {

@@ -1,6 +1,8 @@
+// ChatRoom.tsx
+
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp, doc, getDoc } from 'firebase/firestore';
 import { db, auth } from '../firebaseConfig';
 import '../styles/ChatRoom.css';
 
@@ -8,19 +10,36 @@ const ChatRoom: React.FC = () => {
     const { roomId } = useParams<{ roomId: string }>();
     const [messages, setMessages] = useState<any[]>([]);
     const [newMessage, setNewMessage] = useState('');
+    const [isParticipant, setIsParticipant] = useState(false);
 
     useEffect(() => {
-        const q = query(collection(db, `chatRooms/${roomId}/messages`), orderBy('timestamp'));
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            const messagesData = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            }));
-            setMessages(messagesData);
-        });
+        const checkParticipation = async () => {
+            const chatDoc = await getDoc(doc(db, 'chatRooms', roomId));
+            const chatData = chatDoc.data();
+            if (chatData && chatData.participants.includes(auth.currentUser?.uid)) {
+                setIsParticipant(true);
+            } else {
+                setIsParticipant(false);
+            }
+        };
 
-        return () => unsubscribe();
+        checkParticipation();
     }, [roomId]);
+
+    useEffect(() => {
+        if (isParticipant) {
+            const q = query(collection(db, `chatRooms/${roomId}/messages`), orderBy('timestamp'));
+            const unsubscribe = onSnapshot(q, (snapshot) => {
+                const messagesData = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                setMessages(messagesData);
+            });
+
+            return () => unsubscribe();
+        }
+    }, [roomId, isParticipant]);
 
     const handleSendMessage = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -35,10 +54,13 @@ const ChatRoom: React.FC = () => {
             userId: user.uid,
             timestamp: serverTimestamp()
         });
-        
 
         setNewMessage('');
     };
+
+    if (!isParticipant) {
+        return <div>Nie masz dostępu do tego czatu.</div>;
+    }
 
     return (
         <div className='ChatRoomContainer'>
